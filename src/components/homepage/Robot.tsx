@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, useAnimations } from "@react-three/drei";
 
@@ -9,30 +9,47 @@ function RobotModel() {
   const { scene, animations } = useGLTF("/robot.glb");
   const { actions } = useAnimations(animations, group);
 
-  React.useEffect(() => {
-    // Play the FIRST animation found in the GLB
+  // Play first animation automatically
+  useEffect(() => {
     if (actions && Object.keys(actions).length > 0) {
-      const firstAnim = Object.keys(actions)[0];
-      actions[firstAnim].play();
+      const first = Object.keys(actions)[0];
+      actions[first]?.play();
     }
   }, [actions]);
 
-  return <primitive ref={group} object={scene} scale={[1,1.4,1]}
- />;
+  return (
+    <primitive
+      ref={group}
+      object={scene}
+      scale={[1, 1.3, 1]}
+      position={[1, -1.5, 0]}
+    />
+  );
 }
 
 export default function Robot() {
   return (
-    <Canvas
-      style={{ width: "100%", height: "100%" }}
-      camera={{ position: [4, 2, 7], fov: 35 }}
-
+    <div
+      style={{
+        position: "fixed",
+        right: "3%",
+        bottom: "0%",
+        width: "350px",
+        height: "350px",
+        pointerEvents: "none",
+        zIndex: 50,
+      }}
     >
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[5, 5, 5]} intensity={1} />
-      <RobotModel />
-      <OrbitControls enableZoom={false} />
-    </Canvas>
+      <Canvas
+        style={{ width: "100%", height: "100%" }}
+        camera={{ position: [4, 2, 7], fov: 35 }}
+      >
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <RobotModel />
+        <OrbitControls enableZoom={false} />
+      </Canvas>
+    </div>
   );
 }
 

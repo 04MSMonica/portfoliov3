@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Archivo_Black } from "next/font/google";
+import { Archivo_Black } from "next/font/google";
 import "./globals.css";
+
 import ElasticCursor from "@/components/ui/ElasticCursor";
 import Particles from "@/components/Particles";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -14,6 +15,9 @@ import EasterEggs from "@/components/easter-eggs";
 import { config } from "@/data/config";
 import SocketContextProvider from "@/contexts/socketio";
 import RemoteCursors from "@/components/realtime/remote-cursors";
+
+// ⭐ Import robot into global layout
+import Robot from "@/components/homepage/Robot";
 
 export const metadata: Metadata = {
   title: config.title,
@@ -40,10 +44,7 @@ export const metadata: Metadata = {
     description: config.description.short,
     images: [config.ogImg],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 const archivoBlack = Archivo_Black({
@@ -64,31 +65,43 @@ export default function RootLayout({
           src={process.env.UMAMI_DOMAIN}
           data-website-id={process.env.UMAMI_SITE_ID}
         ></Script>
-        {/* <Analytics /> */}
       </head>
+
       <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          <Particles
-            className="fixed inset-0 -z-10 animate-fade-in"
-            quantity={100}
-          />
+          {/* Background particles */}
+          <Particles className="fixed inset-0 -z-10 animate-fade-in" quantity={100} />
+
+          {/* Preloader wraps content (NOT robot) */}
           <Preloader>
             <SocketContextProvider>
               <RemoteCursors />
+
               <TooltipProvider>
+                {/* Header stays fixed */}
                 <Header />
+
+                {/* Page content */}
                 {children}
+
+                {/* Footer */}
                 <Footer />
               </TooltipProvider>
+
             </SocketContextProvider>
+
             <Toaster />
             <EasterEggs />
             <ElasticCursor />
           </Preloader>
+
+          {/* ⭐ Robot placed OUTSIDE Preloader — never scrolls, never resets */}
+          <Robot />
+
         </ThemeProvider>
       </body>
     </html>
