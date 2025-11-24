@@ -9,7 +9,6 @@ function RobotModel() {
   const { scene, animations } = useGLTF("/robot.glb");
   const { actions } = useAnimations(animations, group);
 
-  // Play first animation automatically
   useEffect(() => {
     if (actions && Object.keys(actions).length > 0) {
       const first = Object.keys(actions)[0];
@@ -21,8 +20,8 @@ function RobotModel() {
     <primitive
       ref={group}
       object={scene}
-      scale={[1, 1.3, 1]}
-      position={[1, -1.5, 0]}
+      scale={[2.2, 2.6, 2.2]}
+      position={[0, -2, 0]}
     />
   );
 }
@@ -32,22 +31,22 @@ export default function Robot() {
     <div
       style={{
         position: "fixed",
-        right: "3%",
-        bottom: "0%",
-        width: "350px",
-        height: "350px",
+        right: "10%",
+        bottom: "16%",  
+        width: "500px",
+        height: "500px",
         pointerEvents: "none",
         zIndex: 50,
       }}
     >
       <Canvas
         style={{ width: "100%", height: "100%" }}
-        camera={{ position: [4, 2, 7], fov: 35 }}
+        camera={{ position: [5, 3, 8], fov: 35 }}
       >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <ambientLight intensity={1} />
+        <directionalLight position={[6, 6, 6]} intensity={1.2} />
         <RobotModel />
-        <OrbitControls enableZoom={false} />
+        <OrbitControls enableZoom={false} enablePan={false} />
       </Canvas>
     </div>
   );
