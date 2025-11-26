@@ -16,7 +16,8 @@ import ScrollDownIcon from "../scroll-down-icon";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { config } from "@/data/config";
 
-import Robot from "../homepage/Robot"; // ⭐ ROBOT IMPORT
+// ⭐ Robot import
+import Robot from "../homepage/Robot";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
@@ -24,7 +25,7 @@ const HeroSection = () => {
   return (
     <section id="hero" className="relative w-full h-screen overflow-hidden">
       <div className="grid md:grid-cols-2 h-full">
-
+        
         {/* LEFT SIDE — TEXT */}
         <div
           className={cn(
@@ -104,14 +105,12 @@ const HeroSection = () => {
           )}
         </div>
 
-        {/* RIGHT SIDE — ROBOT */}
-        <div className="col-span-1 flex items-center justify-center relative">
-          <div className="w-[90%] h-[90%] md:w-[100%] md:h-[100%] max-w-[500px]">
-            <Robot />
-          </div>
-        </div>
-
+        {/* RIGHT GRID EMPTY — Robot is NOT inside grid */}
+        <div className="col-span-1 relative"></div>
       </div>
+
+      {/* ⭐ Robot floating on homepage only */}
+      <Robot />
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
         <ScrollDownIcon />

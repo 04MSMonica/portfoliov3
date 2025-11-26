@@ -20,8 +20,8 @@ function RobotModel() {
     <primitive
       ref={group}
       object={scene}
-      scale={[2.2, 2.6, 2.2]}
-      position={[0, -2, 0]}
+      scale={[1.4, 1.4, 1.4]}
+      position={[0, -0.8, 0]}
     />
   );
 }
@@ -30,23 +30,23 @@ export default function Robot() {
   return (
     <div
       style={{
-        position: "fixed",
-        right: "10%",
-        bottom: "16%",  
-        width: "500px",
-        height: "500px",
+        position: "absolute",   // ⭐ stays inside hero only
+        right: "9%",
+        bottom: "5%",
+        width: "700px",
+        height: "700px",
         pointerEvents: "none",
-        zIndex: 50,
+        zIndex: 10,
       }}
     >
       <Canvas
         style={{ width: "100%", height: "100%" }}
-        camera={{ position: [5, 3, 8], fov: 35 }}
+        camera={{ position: [4, 2, 7], fov: 35 }}
       >
-        <ambientLight intensity={1} />
-        <directionalLight position={[6, 6, 6]} intensity={1.2} />
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={1} />
         <RobotModel />
-        <OrbitControls enableZoom={false} enablePan={false} />
+        <OrbitControls enableZoom={false} />
       </Canvas>
     </div>
   );

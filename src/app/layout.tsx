@@ -16,9 +16,6 @@ import { config } from "@/data/config";
 import SocketContextProvider from "@/contexts/socketio";
 import RemoteCursors from "@/components/realtime/remote-cursors";
 
-// ⭐ Import robot into global layout
-import Robot from "@/components/homepage/Robot";
-
 export const metadata: Metadata = {
   title: config.title,
   description: config.description.long,
@@ -73,35 +70,25 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          {/* Background particles */}
           <Particles className="fixed inset-0 -z-10 animate-fade-in" quantity={100} />
 
-          {/* Preloader wraps content (NOT robot) */}
           <Preloader>
             <SocketContextProvider>
               <RemoteCursors />
 
               <TooltipProvider>
-                {/* Header stays fixed */}
                 <Header />
 
-                {/* Page content */}
-                {children}
+                {children} {/* Robot will load ONLY inside homepage */}
 
-                {/* Footer */}
                 <Footer />
               </TooltipProvider>
-
             </SocketContextProvider>
 
             <Toaster />
             <EasterEggs />
             <ElasticCursor />
           </Preloader>
-
-          {/* ⭐ Robot placed OUTSIDE Preloader — never scrolls, never resets */}
-          <Robot />
-
         </ThemeProvider>
       </body>
     </html>
