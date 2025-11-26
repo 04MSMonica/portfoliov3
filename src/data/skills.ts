@@ -1,50 +1,50 @@
 export const skills = [
   {
-    id: "react",
-    label: "React",
-    description:
-      "React is a fast and efficient JavaScript library for building rich, interactive user interfaces.",
-  },
-  {
-    id: "javascript",
-    label: "JavaScript",
-    description:
-      "JavaScript powers the dynamic behavior of websites, enabling logic, animations, and interactivity.",
-  },
-  {
     id: "html",
     label: "HTML",
-    description:
-      "HTML provides the foundational structure for all web pages, organizing content and layout.",
+    icon: "https://raw.githubusercontent.com/sanidhyy/space-portfolio/main/public/skills/html.png",
+    description: "Foundation of web pages.",
   },
   {
     id: "css",
     label: "CSS",
-    description:
-      "CSS styles and formats websites, enabling responsive layouts, animations, and beautiful UI design.",
+    icon: "https://raw.githubusercontent.com/sanidhyy/space-portfolio/main/public/skills/css.png",
+    description: "Styling and layout.",
+  },
+  {
+    id: "javascript",
+    label: "JavaScript",
+    icon: "https://raw.githubusercontent.com/sanidhyy/space-portfolio/main/public/skills/js.png",
+    description: "Dynamic functionality.",
+  },
+  {
+    id: "react",
+    label: "React",
+    icon: "https://raw.githubusercontent.com/sanidhyy/space-portfolio/main/public/skills/react.png",
+    description: "Component-based UI library.",
   },
   {
     id: "tailwind",
     label: "Tailwind CSS",
-    description:
-      "Tailwind is a utility-first CSS framework that enables rapid and consistent UI development.",
-  },
-  {
-    id: "threejs",
-    label: "Three.js",
-    description:
-      "Three.js is a powerful 3D JavaScript library used to create interactive graphics and 3D experiences.",
-  },
-  {
-    id: "git",
-    label: "Git",
-    description:
-      "Git is a version control system used to track code changes and collaborate with developers efficiently.",
+    icon: "https://raw.githubusercontent.com/sanidhyy/space-portfolio/main/public/skills/tailwind.png",
+    description: "Utility-first CSS framework.",
   },
   {
     id: "figma",
     label: "Figma",
-    description:
-      "Figma is a collaborative design tool used for UI/UX design, prototyping, and creating design systems.",
+    icon: "https://raw.githubusercontent.com/sanidhyy/space-portfolio/main/public/skills/figma.png",
+    description: "Collaborative UI/UX design tool.",
+  },
+  {
+    id: "git",
+    label: "Git",
+    icon: "https://raw.githubusercontent.com/github/explore/main/topics/git/git.png",
+    description: "Version control system.",
+  },
+  {
+    id: "threejs",
+    label: "Three.js",
+    icon: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/threedotjs.svg",
+    description: "3D JavaScript library for rendering graphics.",
   }
 ];
