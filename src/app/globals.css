@@ -76,12 +76,15 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
 .wheel-rotate {
   animation: wheel-rotate 28s linear infinite;
   transform-origin: center;
+  z-index: 10;
+  pointer-events: auto;
 }
 
-/* Floating Icons (keeps center translate intact) */
+/* Floating Icons */
 @keyframes float {
   0%   { transform: translate(-50%, -50%) translateY(0px); }
   50%  { transform: translate(-50%, -50%) translateY(-8px); }
@@ -89,28 +92,36 @@ body {
 }
 .icon-float {
   animation: float 3.4s ease-in-out infinite;
+  pointer-events: auto;
+  will-change: transform;
+}
+
+/* Allow click-through on outline */
+.wheel-container > .rounded-full,
+.wheel-container .outline-ignore {
+  pointer-events: none;
 }
 
 /* -------------------------
-   POPUP ANIMATION
+   POPUP ANIMATION (SAFE)
 -------------------------- */
 @keyframes slide-right {
-  0% { opacity: 0; transform: translateY(-50%) translateX(25px); }
-  100% { opacity: 1; transform: translateY(-50%) translateX(0px); }
+  0% { opacity: 0; transform: translateX(25px); }
+  100% { opacity: 1; transform: translateX(0px); }
 }
+
 .animate-slide-right {
   animation: slide-right 0.35s ease-out forwards;
 }
 
-/* Ensure popup sits ABOVE rotating wheel */
+/* Popup — visual only (no positioning!!) */
 .popup {
-  position: absolute;
   z-index: 60;
   pointer-events: auto;
 }
 
 /* -------------------------
-   THREE.JS COLOR FIX
+   THREE.JS ICON COLOUR FIX
 -------------------------- */
 .threejs-icon {
   filter: invert(56%) sepia(92%) saturate(800%) hue-rotate(160deg)
@@ -123,20 +134,56 @@ body {
 }
 
 /* -------------------------
-   ACCESSIBILITY
+   ICON IMAGE HELPERS
 -------------------------- */
-img { image-rendering: auto; }
+img {
+  image-rendering: auto;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
 
+.no-rotate {
+  transform: none !important;
+}
+
+.icon-small  { width: 48px; height: 48px; }
+.icon-medium { width: 64px; height: 64px; }
+.icon-large  { width: 96px; height: 96px; }
+
+/* -------------------------
+   ACCESSIBILITY & FOCUS
+-------------------------- */
 :focus {
   outline: 2px solid rgba(59,130,246,0.55);
   outline-offset: 2px;
 }
 
-/* Disable animations for reduced motion users */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .wheel-rotate,
   .icon-float,
   .animate-slide-right {
     animation: none !important;
   }
+}
+
+/* -------------------------
+   LAYOUT HELPERS
+-------------------------- */
+.wheel-popup-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;   /* IMPORTANT */
+  justify-content: center;
+  gap: 2.5rem;
+  width: max-content;
+}
+
+button, .clickable, [role="button"] {
+  cursor: pointer;
+}
+
+.popup-shadow {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 20px rgba(0,255,255,0.08);
 }
