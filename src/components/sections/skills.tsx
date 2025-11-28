@@ -10,10 +10,10 @@ const SkillsSection = () => {
   return (
     <section
       id="skills"
-      className="w-full min-h-screen pt-32 pb-20 relative"
+      className="relative w-full min-h-screen pt-32 pb-20"
     >
-      {/* Sticky SKILLS Heading */}
-      <div className="sticky top-[70px] z-20">
+      {/* Fixed SKILLS Heading */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
         <Link href={"#skills"}>
           <BoxReveal width="100%">
             <h2
@@ -34,7 +34,7 @@ const SkillsSection = () => {
       </div>
 
       {/* Skill Wheel */}
-      <div className="flex justify-center mt-16 md:mt-24 z-10 relative">
+      <div className="flex justify-center mt-32 md:mt-40 relative z-10">
         <SkillWheel />
       </div>
     </section>

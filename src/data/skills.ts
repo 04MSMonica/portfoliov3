@@ -19,7 +19,7 @@ export const skills = [
       },
       {
         name: "Accessibility (ARIA)",
-        icon: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/waiaria.svg",
+        icon: "https://raw.githubusercontent.com/google/material-design-icons/master/src/action/accessibility/materialicons/24px.svg",
       },
     ],
     stats: {
