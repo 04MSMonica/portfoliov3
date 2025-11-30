@@ -138,7 +138,7 @@ const projects: Project[] = [
     id: "ecommerce",
     title: "E-Commerce Website",
     category: "Web Application",
-    src: "/projects/ecommerce.png",
+    src: "/projects/ecommercerefined.png",
     screenshots: [],
     github: "https://github.com/04MSMonica/e-commerce",
     live: "",
@@ -161,7 +161,7 @@ const projects: Project[] = [
     id: "emailjs",
     title: "Email Sender App",
     category: "Utility App",
-    src: "/projects/email.png",
+    src: "/projects/emailrs.png",
     screenshots: [],
     github: "https://github.com/04MSMonica/email",
     live: "",
@@ -172,7 +172,7 @@ const projects: Project[] = [
     content: (
       <p className="font-mono">
         A lightweight JavaScript email sender app with a clean UI and simple
-        logic for sending messages quickly.
+        logic for sending messages quickly based on voice commands.
       </p>
     ),
   },
