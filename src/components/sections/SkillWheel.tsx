@@ -1,173 +1,159 @@
 "use client";
 
-import React, { useState } from "react";
-import { skills } from "@/data/skills";
+import React, { useMemo, useState } from "react";
+import { skills, Skill } from "@/data/skills";
 
-type TechItem = { name: string; icon: string };
-type Stats = { [key: string]: number };
-type Skill = {
-  id: string;
-  label: string;
-  icon: string;
-  description: string;
-  techstack?: TechItem[];
-  stats?: Stats;
-};
+type RingProps = { percent: number; size?: number; stroke?: number };
 
-/* =======================
-   RING COMPONENT
-======================= */
-function Ring({ percent = 75, size = 56, stroke = 6 }) {
+function Ring({ percent, size = 56, stroke = 6 }: RingProps) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const dash = (percent / 100) * c;
   const gap = c - dash;
 
-  const color =
-    percent >= 90 ? "#10b981" :
-    percent >= 70 ? "#f59e0b" :
-    "#ef4444";
-
-  const gradId = `grad-${percent}-${size}`;
-
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <defs>
-        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={color} />
-          <stop offset="100%" stopColor={color} stopOpacity="0.7" />
-        </linearGradient>
-      </defs>
-
+    <svg width={size} height={size}>
       <circle
         cx={size / 2}
         cy={size / 2}
         r={r}
-        stroke="rgba(255,255,255,0.08)"
+        stroke="rgba(255,255,255,0.06)"
         strokeWidth={stroke}
-        fill="transparent"
+        fill="none"
       />
-
       <circle
         cx={size / 2}
         cy={size / 2}
         r={r}
-        stroke={`url(#${gradId})`}
+        stroke="#00eaff"
         strokeWidth={stroke}
-        strokeLinecap="round"
-        fill="transparent"
         strokeDasharray={`${dash} ${gap}`}
+        strokeLinecap="round"
+        fill="none"
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
       />
     </svg>
   );
 }
 
-/* =======================
-   MAIN WHEEL
-======================= */
 export default function SkillWheel() {
-  const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
+  const WHEEL = 560;
+
+  const OUTER_R = WHEEL / 2;
+  const INNER_R = OUTER_R * 0.55;
+  const ICON_R = OUTER_R * 0.78;
+
+  const count = 8;
+  const cx = OUTER_R;
+  const cy = OUTER_R;
+
+  const [active, setActive] = useState<Skill | null>(null);
+
+  const spokes = useMemo(() => {
+    return [...Array(count)].map((_, i) => {
+      const a = (i / count) * Math.PI * 2;
+
+      return {
+        x1: cx + Math.cos(a) * INNER_R,
+        y1: cy + Math.sin(a) * INNER_R,
+        x2: cx + Math.cos(a) * OUTER_R,
+        y2: cy + Math.sin(a) * OUTER_R,
+      };
+    });
+  }, []);
 
   return (
-    <div className="relative w-full flex justify-center items-center">
+    <div className="w-full flex justify-center py-10">
+      <div className="relative wheel-popup-wrapper" style={{ maxWidth: 840 }}>
 
-      {/* 🚀 WHEEL WRAPPER */}
-      <div className="relative wheel-popup-wrapper">
+        {/* --- WHEEL --- */}
+        <div style={{ width: WHEEL, height: WHEEL, position: "relative" }}>
 
-        {/* ⭐ NEON GLOW BEHIND WHEEL */}
-        <div className="neon-ring absolute inset-0"></div>
+          <div className="neon-ring" />
+          <div className="wheel-glow" />
+          <div className="neon-outline" />
 
-        {/* 🌟 NEW: OUTLINE GLOW */}
-        <div className="wheel-glow absolute inset-0"></div>
+          <div
+            className="inner-ring"
+            style={{ width: INNER_R * 2, height: INNER_R * 2 }}
+          />
 
-        {/* 🎡 WHEEL */}
-        <div className="wheel-container relative w-[420px] h-[420px] md:w-[520px] md:h-[520px]">
+          <svg className="wheel-spokes" width={WHEEL} height={WHEEL}>
+            {spokes.map((s, i) => (
+              <line key={i} {...s} className="spoke-line" />
+            ))}
+          </svg>
 
-          <div className="absolute inset-0 wheel-rotate">
-            {skills.map((skill, index) => {
-              const angle = (index / skills.length) * Math.PI * 2;
-              const radius = 185;
+          {/* --- ICONS --- */}
+          <div className="absolute inset-0" style={{ zIndex: 8 }}>
+            {skills.map((sk, i) => {
+              const a = (i / count) * Math.PI * 2; // perfect symmetry
+              const x = cx + Math.cos(a) * ICON_R;
+              const y = cy + Math.sin(a) * ICON_R;
 
               return (
                 <div
-                  key={skill.id}
-                  onClick={() => setActiveSkill(skill)}
-                  className="absolute icon-float cursor-pointer"
-                  style={{
-                    left: `calc(50% + ${Math.cos(angle) * radius}px)`,
-                    top: `calc(50% + ${Math.sin(angle) * radius}px)`,
-                    transform: "translate(-50%, -50%)",
-                    width: 75,
-                    height: 75,
-                  }}
+                  key={sk.id}
+                  className="icon-wrapper"
+                  style={{ left: x, top: y }}
                 >
-                  <img
-                    src={skill.icon}
-                    alt={skill.label}
-                    className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(0,255,255,0.4)]"
-                  />
+                  <div className="icon-tile icon-float" onClick={() => setActive(sk)}>
+                    <img src={sk.icon} alt={sk.label} />
+                  </div>
                 </div>
               );
             })}
           </div>
 
-          {/* OUTLINE */}
-          <div className="absolute inset-0 rounded-full border border-white/10"></div>
         </div>
 
-        {/* 📌 POPUP CARD */}
-        {activeSkill && (
-          <div className="popup popup-shadow popup-glow p-6 w-80 md:w-96 rounded-xl animate-slide-right">
+        {/* --- POPUP --- */}
+        {active && (
+          <div
+            className="popup"
+            style={{
+              left: `calc(${WHEEL}px + 26px)`,
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+          >
+            <h3 className="text-xl mb-2">{active.label}</h3>
+            <p className="opacity-90 mb-4">{active.description}</p>
 
-            <h3 className="text-xl font-bold">{activeSkill.label}</h3>
-            <p className="text-sm opacity-90 mt-2">{activeSkill.description}</p>
-
-            {/* TECH STACK */}
-            {activeSkill.techstack && (
-              <div className="mt-5">
-                <h4 className="text-sm font-semibold mb-2 text-cyan-400">
-                  Tech Stack
-                </h4>
-
-                <div className="flex flex-wrap gap-2">
-                  {activeSkill.techstack.map((item, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-2 bg-black/10 dark:bg-white/10 px-2 py-1 rounded-md backdrop-blur"
-                    >
-                      <img src={item.icon} className="w-6 h-6" />
-                      <span className="text-xs">{item.name}</span>
+            {active.techstack && (
+              <>
+                <div className="text-cyan-300 mb-2">Tech Stack</div>
+                <div className="flex gap-2 flex-wrap">
+                  {active.techstack.map((t, idx) => (
+                    <div key={idx} className="tech-pill">
+                      <img src={t.icon} width={18} height={18} />
+                      <span className="text-xs">{t.name}</span>
                     </div>
                   ))}
                 </div>
-              </div>
+              </>
             )}
 
-            {/* STATS */}
-            {activeSkill.stats && (
-              <div className="mt-5">
-                <h4 className="text-sm font-semibold mb-2 text-cyan-400">
-                  Stats
-                </h4>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {Object.entries(activeSkill.stats).map(([label, val]) => (
-                    <div key={label} className="flex items-center gap-3">
-                      <Ring percent={val} />
-                      <div className="text-sm">
-                        <div className="font-medium">{val}</div>
-                        <div className="text-xs opacity-70 capitalize">{label}</div>
+            {active.stats && (
+              <>
+                <div className="text-cyan-300 mt-4 mb-2">Stats</div>
+                <div className="grid grid-cols-2 gap-4">
+                  {Object.entries(active.stats).map(([k, v]) => (
+                    <div key={k} className="flex items-center gap-3">
+                      <Ring percent={v} />
+                      <div>
+                        <div className="font-bold">{v}</div>
+                        <div className="text-xs opacity-70">{k}</div>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
+              </>
             )}
 
             <button
-              className="mt-4 underline text-sm text-cyan-400"
-              onClick={() => setActiveSkill(null)}
+              onClick={() => setActive(null)}
+              className="text-cyan-300 underline mt-4"
             >
               Close
             </button>

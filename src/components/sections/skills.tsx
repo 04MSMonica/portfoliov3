@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { BoxReveal } from "../reveal-animations";
 import { cn } from "@/lib/utils";
-import SkillWheel from "./SkillWheel";
+import SkillWheel from "./SkillWheel"; // ✅ Only SkillWheel – no SkillGalaxy
 
 const SkillsSection = () => {
   return (
@@ -12,7 +12,7 @@ const SkillsSection = () => {
       id="skills"
       className="relative w-full min-h-screen pt-32 pb-20"
     >
-      {/* Fixed SKILLS Heading */}
+      {/* SKILLS Heading */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
         <Link href={"#skills"}>
           <BoxReveal width="100%">
