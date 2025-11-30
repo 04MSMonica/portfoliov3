@@ -11,256 +11,346 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-    --brand: hsl(20, 100%, 70%);
-
-    /* FIX FOR LIGHT MODE VISIBILITY */
-    --popup-bg-light: rgba(255, 255, 255, 0.8);
-    --popup-text-light: #111;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --popup-bg-dark: rgba(4, 8, 16, 0.6);
+    --popup-text-dark: #dffcff;
+    --neon-c: 0 180 255;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-
-    /* DARK MODE POPUP FIX */
-    --popup-bg-dark: rgba(0, 0, 0, 0.4);
-    --popup-text-dark: #fff;
+    --popup-bg-dark: rgba(0, 0, 0, 0.5);
+    --popup-text-dark: #dffcff;
   }
 }
 
 @layer base {
-  * { @apply border-border; }
-  body { @apply bg-background text-foreground; }
-}
-
-/* -------------------------
-   WHEEL + FLOAT ANIMATIONS
--------------------------- */
-
-@keyframes wheel-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.wheel-rotate {
-  animation: wheel-rotate 28s linear infinite;
-  transform-origin: center;
-  z-index: 10;
-  pointer-events: auto;
-}
-
-@keyframes float {
-  0%   { transform: translate(-50%, -50%) translateY(0px); }
-  50%  { transform: translate(-50%, -50%) translateY(-8px); }
-  100% { transform: translate(-50%, -50%) translateY(0px); }
-}
-
-.icon-float {
-  animation: float 3.4s ease-in-out infinite;
-  pointer-events: auto;
-  will-change: transform;
-}
-
-.wheel-container > .rounded-full,
-.wheel-container .outline-ignore {
-  pointer-events: none;
-}
-
-/* -------------------------
-   POPUP ANIMATION
--------------------------- */
-@keyframes slide-right {
-  0% { opacity: 0; transform: translateX(25px); }
-  100% { opacity: 1; transform: translateX(0px); }
-}
-
-.animate-slide-right {
-  animation: slide-right 0.35s ease-out forwards;
-}
-
-/* Popup — NO positioning */
-.popup {
-  z-index: 60;
-  pointer-events: auto;
-
-  /* LIGHT / DARK BACKGROUND FIX */
-  background: var(--popup-bg-light);
-  color: var(--popup-text-light);
-}
-
-.dark .popup {
-  background: var(--popup-bg-dark);
-  color: var(--popup-text-dark);
-}
-
-/* -------------------------
-   THREE.JS ICON COLOUR FIX
--------------------------- */
-.threejs-icon {
-  filter: invert(56%) sepia(92%) saturate(800%) hue-rotate(160deg)
-          brightness(150%) contrast(140%);
-  transition: filter 160ms ease;
-}
-.threejs-icon:hover {
-  filter: invert(56%) sepia(92%) saturate(1100%) hue-rotate(160deg)
-          brightness(170%) contrast(150%);
-}
-
-/* -------------------------
-   ICON IMAGE HELPERS
--------------------------- */
-img {
-  image-rendering: auto;
-  -webkit-user-drag: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-}
-
-.no-rotate {
-  transform: none !important;
-}
-
-.icon-small  { width: 48px; height: 48px; }
-.icon-medium { width: 64px; height: 64px; }
-.icon-large  { width: 96px; height: 96px; }
-
-/* -------------------------
-   ACCESSIBILITY & FOCUS
--------------------------- */
-:focus {
-  outline: 2px solid rgba(59,130,246,0.55);
-  outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wheel-rotate,
-  .icon-float,
-  .animate-slide-right {
-    animation: none !important;
+  * {
+    @apply border-border;
+    box-sizing: border-box !important;
+  }
+  body {
+    @apply bg-black text-white;
   }
 }
 
-/* -------------------------
-   LAYOUT HELPERS
--------------------------- */
-.wheel-popup-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  width: max-content;
-}
-
-button, .clickable, [role="button"] {
-  cursor: pointer;
-}
-
-/* Popup shadow */
-.popup-shadow {
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.45),
-    0 0 20px rgba(0,255,255,0.08);
-}
-
-/* -------------------------
-   NEON RING WHEEL GLOW (Center Aura)
--------------------------- */
-.neon-ring {
+/* ================================================================
+   UNIVERSAL WHEEL CENTER
+================================================================ */
+.wheel-layer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
   border-radius: 50%;
   pointer-events: none;
+}
 
-  background: radial-gradient(
-    circle,
-    rgba(0, 255, 255, 0.35) 0%,
-    rgba(0, 255, 255, 0.15) 40%,
-    rgba(0, 255, 255, 0.05) 60%,
-    transparent 75%
-  );
+/* ================================================================
+   ICON WRAPPER + FLOAT FIX
+================================================================ */
+.icon-wrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
 
-  filter: blur(32px);
-  animation: neonPulse 4s ease-in-out infinite alternate;
+@keyframes float-y {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.icon-float {
+  animation: float-y 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ================================================================
+   NEON GLOW LAYERS
+================================================================ */
+.neon-ring {
+  @apply wheel-layer;
+  background: radial-gradient(circle at center,
+      rgba(0, 245, 255, 0.22) 0%,
+      rgba(0, 150, 255, 0.18) 35%,
+      rgba(0, 80, 160, 0.12) 55%,
+      rgba(0, 30, 60, 0.04) 70%,
+      transparent 80%);
+  filter: blur(45px);
   z-index: 1;
 }
 
-@keyframes neonPulse {
-  0% {
-    opacity: 0.45;
-    transform: scale(0.98);
-  }
-  100% {
-    opacity: 0.9;
-    transform: scale(1.04);
-  }
+.wheel-glow {
+  @apply wheel-layer;
+  background: radial-gradient(circle,
+      rgba(0, 200, 255, 0.35) 0%,
+      rgba(0, 150, 255, 0.20) 30%,
+      rgba(0, 100, 255, 0.12) 50%,
+      rgba(0, 60, 140, 0.05) 70%,
+      transparent 85%);
+  filter: blur(35px);
+  z-index: 0;
 }
 
-/* -------------------------
-   OUTLINE GLOW (THIN CIRCLE GLOW)
--------------------------- */
-.wheel-glow {
-  position: absolute;
-  inset: -18px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 255, 255, 0.25) 0%,
-    rgba(0, 255, 255, 0.12) 40%,
-    transparent 70%
-  );
-  filter: blur(20px);
-  z-index: 0;
+.neon-outline {
+  @apply wheel-layer;
+  border: 3px solid rgba(0, 255, 255, 0.55);
+  box-shadow:
+    0 0 18px rgba(0, 220, 255, 0.65),
+    0 0 34px rgba(0, 120, 255, 0.35),
+    inset 0 0 25px rgba(0, 180, 255, 0.18);
+  z-index: 4;
+}
+
+/* ================================================================
+   INNER RING
+================================================================ */
+.inner-ring {
+  @apply wheel-layer;
+  background: radial-gradient(circle at center,
+      rgba(0, 20, 40, 0.45) 0%,
+      rgba(0, 10, 20, 0.35) 45%,
+      rgba(0, 5, 10, 0.55) 70%);
+  box-shadow:
+      inset 0 0 35px rgba(0, 150, 255, 0.08),
+      inset 0 0 65px rgba(0, 140, 255, 0.05);
+  z-index: 3;
+}
+
+/* ================================================================
+   SPOKES
+================================================================ */
+.wheel-spokes {
+  @apply wheel-layer;
+  z-index: 4;
+}
+
+.spoke-line {
+  stroke: rgba(0, 220, 255, 0.14);
+  stroke-width: 3;
+}
+
+/* ================================================================
+   PREMIUM NEON ICON GLOW (UPGRADED)
+================================================================ */
+.icon-tile {
+  width: 84px;
+  height: 84px;
+
+  border-radius: 22px;
+
+  background: rgba(0, 25, 50, 0.75);
+  border: 1px solid rgba(0, 200, 255, 0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* NEW GLOW STACK (soft outer + inner bloom) */
+  box-shadow:
+    0 0 18px rgba(0, 200, 255, 0.45),
+    0 0 34px rgba(0, 180, 255, 0.28),
+    inset 0 0 22px rgba(0, 150, 255, 0.25),
+    inset 0 0 45px rgba(0, 80, 160, 0.15);
+
+  backdrop-filter: blur(10px);
+  transition: 0.25s ease;
+  cursor: pointer;
+}
+
+.icon-tile:hover {
+  transform: scale(1.13);
+
+  box-shadow:
+    0 0 26px rgba(0, 240, 255, 0.75),
+    0 0 55px rgba(0, 200, 255, 0.55),
+    inset 0 0 30px rgba(0, 200, 255, 0.35),
+    inset 0 0 70px rgba(0, 130, 255, 0.22);
+}
+
+.icon-tile img {
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
   pointer-events: none;
 }
 
-/* -------------------------
-   POPUP GLOW
--------------------------- */
-.popup-glow {
-  box-shadow:
-    0 0 25px rgba(0,255,255,0.25),
-    0 0 60px rgba(0,255,255,0.15);
+/* ================================================================
+   POPUP PANEL
+================================================================ */
+.wheel-popup-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  position: relative;
 }
+
+.popup {
+  position: absolute;
+  background: rgba(0, 10, 22, 0.85);
+  border-radius: 16px;
+  padding: 26px;
+  width: 380px;
+  color: var(--popup-text-dark);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 25px rgba(0, 180, 255, 0.25),
+    0 0 55px rgba(0, 140, 255, 0.18),
+    inset 0 0 25px rgba(0, 200, 255, 0.12);
+  border: 1px solid rgba(0, 190, 255, 0.25);
+  z-index: 30;
+}
+
+.popup h3 {
+  color: #7fe8ff;
+  font-weight: 700;
+}
+
+.tech-pill {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: #cdeff8;
+}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+@media (max-width: 1024px) {
+  .popup {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 18px;
+  }
+  .wheel-popup-wrapper {
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    align-items: center;
+  }
+}
+/* ========== Projects - Neon Tilt helpers ========== */
+
+/* hide scrollbar helper (if not already present) */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* neon edge overlay */
+.project-tilt .neon-edge {
+  box-shadow:
+    inset 0 0 16px rgba(0,200,255,0.06),
+    0 0 22px rgba(0,180,255,0.06);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(0,200,255,0.02), rgba(0,50,80,0.08));
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+/* outer neon stroke using pseudo element for crisp edge */
+.project-tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: -8px;
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow:
+    0 0 10px rgba(0,200,255,0.25),
+    0 0 28px rgba(0,140,255,0.18),
+    0 10px 60px rgba(0,60,120,0.12);
+  opacity: 0.95;
+  transition: box-shadow 220ms ease, transform 220ms ease;
+  mix-blend-mode: screen;
+}
+
+/* tilt reactive subtle rim highlight (driven from inline style var) */
+.project-tilt {
+  --tilt-x: 0;
+  --tilt-y: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  perspective: 1200px;
+}
+
+/* slight glossy reflection */
+.project-tilt .glossy-reflection {
+  position: absolute;
+  left: -20%;
+  top: -30%;
+  width: 140%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.06), transparent 40%);
+  transform: translateZ(30px) rotateZ(-14deg);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* hover pulse (glow intensify) */
+.project-tilt:hover::before {
+  box-shadow:
+    0 0 18px rgba(0,220,255,0.45),
+    0 0 48px rgba(0,180,255,0.28),
+    0 22px 90px rgba(0,60,120,0.18);
+  transform: translateZ(6px) scale(1.01);
+}
+
+/* smoother image transform */
+.project-tilt img, .project-tilt picture, .project-tilt .object-cover {
+  transition: transform 600ms cubic-bezier(.2,.9,.3,1);
+}
+
+/* ensure the neon title underline stays visible */
+h2 > span {
+  will-change: opacity, transform;
+}
+/* ============================================================
+   WHEEL-STYLE NEON OUTLINE FOR PROJECT CARDS (STRONG & CRISP)
+============================================================ */
+.project-tilt {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+/* STRONG CYAN OUTLINE --- MATCHES YOUR WHEEL */
+.project-tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+
+  /* MAIN OUTLINE */
+  border: 2.8px solid rgba(0, 255, 255, 0.65);
+
+  /* GLOW STACK (same style as wheel-outline) */
+  box-shadow:
+    0 0 22px rgba(0, 245, 255, 0.75),
+    0 0 42px rgba(0, 180, 255, 0.55),
+    inset 0 0 28px rgba(0, 220, 255, 0.25),
+    inset 0 0 55px rgba(0, 140, 255, 0.18);
+
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Boost glow further on hover */
+.project-tilt:hover::before {
+  box-shadow:
+    0 0 28px rgba(0, 255, 255, 0.9),
+    0 0 60px rgba(0, 200, 255, 0.75),
+    inset 0 0 35px rgba(0, 240, 255, 0.35),
+    inset 0 0 70px rgba(0, 180, 255, 0.22);
+  border-color: rgba(0, 255, 255, 0.9);
+}
+
