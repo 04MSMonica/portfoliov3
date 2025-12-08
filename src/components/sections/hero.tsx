@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -45,7 +46,7 @@ export default function HeroSection() {
         <div className="flex flex-col justify-center items-center md:items-start">
           {!isLoading && (
             <>
-              {/* “Hi, I am” */}
+              {/* Hi, I am */}
               <BlurIn delay={0.7}>
                 <p className="text-cyan-300/70 text-lg tracking-wide ml-2">
                   Hi, I am
