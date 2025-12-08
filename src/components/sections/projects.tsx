@@ -47,7 +47,7 @@ function extractShortDescription(project: Project): string {
 export default function ProjectsSection() {
   return (
     <section id="projects" className="max-w-7xl mx-auto py-20 px-4">
-      {/* TITLE */}
+      {/* Holographic Title */}
       <h2
         className={cn(
           "relative text-center text-5xl md:text-6xl font-bold mb-16",
@@ -58,7 +58,7 @@ export default function ProjectsSection() {
         <span className="absolute left-1/2 -bottom-3 -translate-x-1/2 w-40 h-[3px] bg-cyan-400 blur-[6px]" />
       </h2>
 
-      {/* HORIZONTAL SCROLLING ROW (keeps the previous layout) */}
+      {/* Scroll Row */}
       <div className="flex gap-8 overflow-x-auto no-scrollbar py-4 perspective-[1200px]">
         {projects.map((project) => (
           <div key={project.id} className="min-w-[420px]">
@@ -71,52 +71,49 @@ export default function ProjectsSection() {
 }
 
 /* ---------------------------------------------------------
-   PROJECT CARD — NEON + GLASSMORPHISM + MEDIUM 3D TILT
+   PROJECT CARD — HOLO TILT CARD
 ---------------------------------------------------------- */
 function ProjectCard({ project }: { project: Project }) {
   const shortDesc = extractShortDescription(project);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
 
-  // TILT PARAMETERS (A3-MEDIUM)
-  const maxTilt = 12; // degrees (medium)
+  // Tilt Settings
+  const maxTilt = 12;
   const scaleOnHover = 1.03;
   const easing = 0.12;
 
-  // store target transform values
   const target = useRef({ rx: 0, ry: 0, tz: 0, scale: 1 });
   const current = useRef({ rx: 0, ry: 0, tz: 0, scale: 1 });
 
-  // Apply smoothing via RAF
+  // Smooth Tilt Renderer
   const render = useCallback(() => {
     const c = current.current;
     const t = target.current;
 
-    // linear interp
     c.rx += (t.rx - c.rx) * easing;
     c.ry += (t.ry - c.ry) * easing;
     c.tz += (t.tz - c.tz) * easing;
     c.scale += (t.scale - c.scale) * easing;
 
     if (cardRef.current) {
-      const rx = c.rx.toFixed(2);
-      const ry = c.ry.toFixed(2);
-      const tz = c.tz.toFixed(2);
-      const s = c.scale.toFixed(3);
-
-      cardRef.current.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(${tz}px) scale(${s})`;
-      // subtle shadow shift by CSS variable (used in global CSS)
-      cardRef.current.style.setProperty("--tilt-x", `${c.ry}`);
-      cardRef.current.style.setProperty("--tilt-y", `${c.rx}`);
+      cardRef.current.style.transform = `
+        rotateX(${c.rx.toFixed(2)}deg)
+        rotateY(${c.ry.toFixed(2)}deg)
+        translateZ(${c.tz.toFixed(2)}px)
+        scale(${c.scale.toFixed(3)})
+      `;
     }
 
     rafRef.current = requestAnimationFrame(render);
   }, []);
 
+  // Proper TS-safe useEffect cleanup
   useEffect(() => {
     rafRef.current = requestAnimationFrame(render);
+
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, [render]);
 
@@ -128,18 +125,12 @@ function ProjectCard({ project }: { project: Project }) {
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
 
-    // center-based [-0.5, 0.5]
     const cx = px - 0.5;
     const cy = py - 0.5;
 
-    // target rotation (inverse for natural tilt)
     target.current.ry = clamp(cx * maxTilt * -1, -maxTilt, maxTilt);
     target.current.rx = clamp(cy * maxTilt, -maxTilt, maxTilt);
-
-    // small translateZ for depth on hover
     target.current.tz = Math.abs((1 - Math.max(0.5, Math.hypot(cx, cy))) * 18);
-
-    // scale a little on hover
     target.current.scale = scaleOnHover;
   }
 
@@ -154,24 +145,19 @@ function ProjectCard({ project }: { project: Project }) {
           ref={cardRef}
           onMouseMove={handleMove}
           onMouseLeave={handleLeave}
-          className={`
-            project-tilt relative rounded-xl overflow-hidden
+          className="
+            relative rounded-xl overflow-hidden
             bg-[rgba(0,10,18,0.55)]
             border border-[rgba(0,200,255,0.18)]
             shadow-[0_0_20px_rgba(0,180,255,0.18)]
             hover:shadow-[0_0_40px_rgba(0,220,255,0.35)]
-            transition-all duration-300 will-change-transform
-            transform-gpu
-          `}
-          style={{
-            perspective: "1200px",
-            transformStyle: "preserve-3d",
-          }}
+            transition-all duration-300 will-change-transform transform-gpu
+          "
         >
-          {/* NEON EDGE GLOW */}
-          <div className="absolute inset-0 rounded-xl pointer-events-none neon-edge" />
+          {/* Glow Edge */}
+          <div className="absolute inset-0 rounded-xl pointer-events-none opacity-60 shadow-[0_0_45px_20px_rgba(0,200,255,0.25)_inset]" />
 
-          {/* IMAGE */}
+          {/* Image */}
           <div className="relative w-full h-56 overflow-hidden border-b border-[rgba(0,200,255,0.08)]">
             <Image
               src={project.src}
@@ -181,27 +167,29 @@ function ProjectCard({ project }: { project: Project }) {
             />
           </div>
 
-          {/* CONTENT */}
-          <div className="p-5 space-y-4 relative z-10">
+          {/* Details */}
+          <div className="p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-cyan-100 drop-shadow-[0_6px_14px_rgba(0,200,255,0.06)]">
+              <h3 className="text-lg font-semibold text-cyan-100">
                 {project.title}
               </h3>
 
-              <span className="text-[10px] px-2 py-1 rounded bg-[rgba(0,200,255,0.08)] text-cyan-200 border border-[rgba(0,200,255,0.18)] backdrop-blur-sm">
+              <span className="text-[10px] px-2 py-1 rounded bg-[rgba(0,200,255,0.08)] text-cyan-200 border border-[rgba(0,200,255,0.18)]">
                 {project.category}
               </span>
             </div>
 
-            <p className="text-sm text-cyan-100/70 leading-relaxed line-clamp-3">
+            <p className="text-sm text-cyan-100/70 line-clamp-3">
               {shortDesc}
             </p>
 
             <div
               role="button"
-              className="w-full py-2 mt-2 rounded-md text-sm text-center
+              className="
+                w-full py-2 mt-2 rounded-md text-sm text-center
                 bg-[rgba(0,200,255,0.08)] text-cyan-100 border border-[rgba(0,200,255,0.25)]
-                hover:bg-[rgba(0,220,255,0.12)] transition"
+                hover:bg-[rgba(0,220,255,0.12)] transition
+              "
             >
               View Details
             </div>
@@ -209,15 +197,15 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </ModalTrigger>
 
-      {/* MODAL */}
-      <ModalBody className="md:max-w-4xl md:max-h-[80%] overflow-auto">
-        <SmoothScroll isInsideModal={true}>
+      {/* MODAL CONTENT */}
+      <ModalBody className="md:max-w-4xl md:max-h-[80%] overflow-auto rounded-xl bg-black/60 border border-cyan-500/20 backdrop-blur-xl p-10">
+        <SmoothScroll isInsideModal>
           <ModalContent>
             <ProjectModalContent project={project} />
           </ModalContent>
         </SmoothScroll>
 
-        <ModalFooter className="gap-4">
+        <ModalFooter className="gap-4 flex justify-end pt-10">
           <div
             role="button"
             className="px-4 py-2 bg-gray-200 text-black dark:bg-black dark:text-white rounded-md text-sm text-center"
@@ -229,7 +217,11 @@ function ProjectCard({ project }: { project: Project }) {
             <Link href={project.github} target="_blank">
               <div
                 role="button"
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black rounded-md text-sm w-32 border border-neutral-800 hover:opacity-90 transition"
+                className="
+                  flex items-center justify-center gap-2 px-4 py-2
+                  bg-cyan-500 text-black rounded-md text-sm w-32
+                  hover:bg-cyan-400 transition
+                "
               >
                 <FaGithub className="text-lg" />
                 GitHub
@@ -252,10 +244,13 @@ function ProjectCard({ project }: { project: Project }) {
 function ProjectModalContent({ project }: { project: Project }) {
   return (
     <>
-      <h4 className="text-lg md:text-2xl font-bold text-center text-neutral-100 mb-8">
+      <h4 className="text-3xl font-bold text-center text-cyan-300 drop-shadow-[0_0_15px_cyan]">
         {project.title}
       </h4>
 
+      <div className="h-[2px] w-40 mx-auto mt-2 mb-10 bg-cyan-400 blur-[4px]" />
+
+      {/* Tech Stack */}
       <div className="flex flex-col md:flex-row justify-evenly mb-10">
         <div className="flex flex-row md:flex-col-reverse justify-center items-center gap-2 text-3xl">
           <p className="text-sm text-neutral-400">Frontend</p>
@@ -270,14 +265,15 @@ function ProjectModalContent({ project }: { project: Project }) {
         )}
       </div>
 
-      {project.content}
+      {/* Project Description */}
+      <div className="bg-white/5 border border-cyan-500/20 p-6 rounded-xl text-center leading-relaxed text-neutral-200 font-mono">
+        {project.content}
+      </div>
     </>
   );
 }
 
-/* -------------------------
-   HELPERS
--------------------------- */
+/* Utility */
 function clamp(v: number, a: number, b: number) {
   return Math.max(a, Math.min(b, v));
 }

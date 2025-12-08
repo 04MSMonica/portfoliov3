@@ -39,10 +39,10 @@ const config = {
   },
   social: {
     twitter: "https://x.com/_Abhi_Speaks/",
-    linkedin: "https://www.linkedin.com/in/zende-abhijit/",
-    instagram: "https://www.instagram.com/_.celestial_abhi._/",
+    linkedin: "https://www.linkedin.com/in/monica-m-s-526340333",
+    instagram: "https://www.instagram.com/monica_m_s495/",
     facebook: "https://www.facebook.com/profile.php?id=100010029821759",
-    github: "https://github.com/Abhiz2411/",
+    github: "https://github.com/04MSMonica",
   },
 };
 export { config };

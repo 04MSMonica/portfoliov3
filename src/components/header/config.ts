@@ -4,11 +4,6 @@ const links: Link[] = [
   {
     title: 'Home',
     href: '/',
-    thumbnail: '/assets/nav-link-previews/landing.png'
-  },
-  {
-    title: 'About',
-    href: '/#about',
     thumbnail: '/assets/nav-link-previews/about.png'
   },
   {
@@ -31,11 +26,7 @@ const links: Link[] = [
   //   href: '/testimonials',
   //   thumbnail: '/assets/nav-link-previews/testimonials.png'
   // },
-  {
-    title: 'Blogs',
-    href: '/blogs',
-    thumbnail: '/assets/nav-link-previews/blog.png',
-  },
+
   {
     title: 'Contact',
     href: '/#contact',

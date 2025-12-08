@@ -1,0 +1,17 @@
+* [33mdbc694c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m chore: update project & skill data
+* [33m92a970a[m feat: update skill wheel and sections
+* [33m0150c54[m style: update global styles
+* [33m6ff25fb[m feat: update project images
+* [33m2291fea[m Add project images and update project cards UI
+* [33m12c398a[m Updated and completed skill.tsx
+* [33me03a5ad[m Update SkillWheel, skills data, and global styles
+* [33ma148560[m Update skillwheel and pops
+* [33m2e16a26[m Remove unused GLB models and update skill icons
+* [33m04a8ada[m Updated skills section and added new icons
+* [33m52e21e9[m float position
+* [33m8b55961[m Updated robot component and layout
+[31m|[m * [33ma999e85[m Cleanup: remove unnecessary screenshots
+[31m|[m * [33me122c03[m WIP backup before cleanup
+[31m|[m[31m/[m  
+* [33m839f3cf[m Today's work
+* [33m1d6653f[m Clean fresh repo without large files

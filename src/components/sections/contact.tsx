@@ -1,5 +1,10 @@
 "use client";
+
 import React from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { config } from "@/data/config";
+
 import {
   Card,
   CardContent,
@@ -8,41 +13,43 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import ContactForm from "../ContactForm";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { config } from "@/data/config";
+
 const ContactSection = () => {
   return (
-    <section id="contact" className="min-h-screen max-w-7xl mx-auto ">
+    <section id="contact" className="min-h-screen max-w-6xl mx-auto pt-24 pb-10">
+      {/* HEADING */}
       <Link href={"#contact"}>
         <h2
           className={cn(
-            "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
-            "bg-gradient-to-b from-black/80 to-black/50",
-            "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50"
+            "text-4xl md:text-7xl text-center font-bold tracking-tight",
+            "text-[#5FE8FF] drop-shadow-[0_0_25px_#00E5FF90]",
+            "select-none"
           )}
         >
-          LET&apos;S WORK <br />
-          TOGETHER
+          LET&apos;S WORK <br /> TOGETHER
         </h2>
       </Link>
-      <div className="grid grid-cols-1 md:grid-cols-2 z-[9999]">
-        <Card className="min-w-7xl bg-white/70 dark:bg-black/70 backdrop-blur-sm rounded-xl mt-10 md:mt-20">
+
+      {/* CENTER CARD */}
+      <div className="w-full flex justify-center mt-14">
+        <Card className="w-full max-w-2xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_#00E5FF30] rounded-2xl p-6">
           <CardHeader>
-            <CardTitle className="text-4xl">Contact Form</CardTitle>
-            <CardDescription>
-              Please contact me directly at{" "}
+            <CardTitle className="text-3xl text-white">Contact Form</CardTitle>
+            <CardDescription className="text-[#8EEBFF]/70">
+              Contact me directly at{" "}
               <a
-                target="_blank"
                 href={`mailto:${config.email}`}
-                className="text-gray-200 cursor-can-hover rounded-lg"
+                className="text-[#5FE8FF] underline"
+                target="_blank"
               >
                 {config.email.replace(/@/g, "(at)")}
               </a>{" "}
-              or drop your info here.
+              or drop your message below.
             </CardDescription>
           </CardHeader>
+
           <CardContent>
             <ContactForm />
           </CardContent>
@@ -51,4 +58,5 @@ const ContactSection = () => {
     </section>
   );
 };
+
 export default ContactSection;

@@ -353,4 +353,105 @@ h2 > span {
     inset 0 0 70px rgba(0, 180, 255, 0.22);
   border-color: rgba(0, 255, 255, 0.9);
 }
+/* ---------- HOLOGRAM / SCANLINE / NEON EDGE ---------- */
+
+@keyframes holo-float {
+  0% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-6px) translateZ(0); }
+  100% { transform: translateY(0) translateZ(0); }
+}
+
+@keyframes scanline {
+  0% { background-position: 0 0; opacity: 0.06; }
+  50% { opacity: 0.12; }
+  100% { background-position: 0 100%; opacity: 0.06; }
+}
+
+/* the neon edge for the project preview card */
+.neon-edge {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 0 30px rgba(0,220,255,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.06));
+  /* an outer neon border stroke */
+  outline: 1px solid rgba(0,220,255,0.06);
+}
+
+/* subtle float on modal main frame */
+.modal-holo-float {
+  animation: holo-float 6s ease-in-out infinite;
+}
+
+/* moving scanlines overlay */
+.holo-scanlines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.00) 20%, rgba(0,0,0,0.03) 100%);
+  background-size: 100% 200%;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: scanline 5s linear infinite;
+}
+
+/* tiny title flicker */
+.holo-title-flicker {
+  text-shadow: 0 6px 30px rgba(0,230,255,0.12);
+  animation: opacity 3s ease-in-out infinite;
+}
+
+/* small screen tweak */
+@media (max-width: 768px){
+  .modal-holo-float { transform: none; animation: none; }
+  .neon-edge { box-shadow: none; outline: none; }
+}
+/* scanline effect */
+.scanlines::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.15) 3px
+  );
+  opacity: 0.06;
+}
+/* ------------------------------ */
+/*   HOLOGRAM GLITCH ANIMATION    */
+/* ------------------------------ */
+@keyframes glitch {
+  0% { clip-path: inset(10% 0 85% 0); transform: translate(0); }
+  20% { clip-path: inset(40% 0 45% 0); transform: translate(-2px, 2px); }
+  40% { clip-path: inset(80% 0 0 0); transform: translate(2px, -2px); }
+  60% { clip-path: inset(30% 0 60% 0); transform: translate(-1px, 1px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, -1px); }
+  100% { clip-path: inset(10% 0 85% 0); transform: translate(0); }
+}
+
+.animate-glitch {
+  animation: glitch 2.3s infinite ease-in-out alternate;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* ------------------------------ */
+/*     HOLOGRAM SCANLINE SWEEP    */
+/* ------------------------------ */
+@keyframes scanline {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.15; }
+  100% { transform: translateY(200%); opacity: 0; }
+}
+
+.animate-scanline {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 255, 0.12),
+    transparent
+  );
+  animation: scanline 6s linear infinite;
+  pointer-events: none;
+}
 
