@@ -91,9 +91,7 @@ export default function HeroSection() {
                     target="_blank"
                   >
                     <BoxReveal delay={1.5}>
-                      <Button
-                        className="flex items-center gap-2 w-full sm:w-auto hologram-button"
-                      >
+                      <Button className="flex items-center gap-2 w-full sm:w-auto hologram-button">
                         <File size={20} />
                         Resume
                       </Button>
@@ -115,7 +113,7 @@ export default function HeroSection() {
                         </Link>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>Let’s work together ⚡</p>
+                        <p>Let's work together ⚡</p>
                       </TooltipContent>
                     </Tooltip>
 
